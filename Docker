@@ -1,3 +1,13 @@
+EXPLICAÇÕES BÁSICAS 
+
+CGROUP
+  Isolamento de CPU e memória.
+
+NAMESPACE
+  Isolamento de disco, network, usuários, processos, etc.
+
+________________________________________________________________________________________________________________________________________________________________________________
+
 PRÉ INSTALAÇÃO
 
 Ativação e instalação do WSL
@@ -29,7 +39,7 @@ Utilizado para adicionar a key para acesso ao repositório docker
 Limpeza de tela inicial
   - touch ~/.hushlogin
 
-__________________________________________________________________________________________________________________________________________________________
+________________________________________________________________________________________________________________________________________________________________________________
 
 INSTALAÇÃO COMANDANDOS DOCKER
 
@@ -51,20 +61,20 @@ Outros comandos interessantes:
   - docker start "CNTAINER ID"
   - docker rm "CONTAINER ID"
 
-__________________________________________________________________________________________________________________________________________________________
+____________________________________________________
 
 ADENTRAR AO CONTAINER
 
 Docker container exec -it
   - acessar o bash dentro do container com interatividade e terminal
 
-__________________________________________________________________________________________________________________________________________________________
+____________________________________________________
 
 INSTALANDO UMA APLICAÇÃO DO GITHUB
 
   - git clone https://github.com/docker/getting-started-app.git
 
-__________________________________________________________________________________________________________________________________________________________
+____________________________________________________
 
 MONTANDO A IMAGEM
 
@@ -77,7 +87,7 @@ Ignorando o certificado hhtps/ssl do YARN na hora da montagem:
 
 Para conferir a imagem criada e as outras já existentes:
   - docker image ls ou docker images
-__________________________________________________________________________________________________________________________________________________________
+____________________________________________________
 
 COMPARTILHANDO IMAGES
 
@@ -102,7 +112,7 @@ adicione o nome do seu repositorio na frente do nome da imagem
   - docker run -d -p 3000:3000 rodrigorgomes/getting-started:lastet
 "usuário/nome da imagem"
 "obs: usuário tem que ser o mesmo do docker hub"
-__________________________________________________________________________________________________________________________________________________________
+____________________________________________________
 
 VOLUMES
 
@@ -132,7 +142,7 @@ Ordenando que baixe essa imagem e ative esse como container, salvando sempre a b
 
 Utilize pra descobrir como excluir, entre outras opções para volume:
   - docker volume --help
-__________________________________________________________________________________________________________________________________________________________
+____________________________________________________
 
 NETWORK
 
@@ -147,28 +157,25 @@ docker run -d -p 3000:3000 -v todo-db:/etc/todos/ -- network todo-app -e rodrigo
 
 "Outra opção mais completa pra se testar, trazendo o mysql, network e o local do database no host:"
 
-
 docker network --help
 docker network create "nome que deseja para network" (todo-app)
 docker network ls
 
-docker run -d -v mysql-todo-db:/var/lib/mysql --network todo-app -e MYSQL_ROOT_PASSWORD=rodrigo -e MYSQL_DATABASE=todos mysql:5.7
-"Criando um docker com o MYSQL dentro, já definindo a senha para root e conectando ao NETWORK criado"
+Criando um docker com o MYSQL dentro, já definindo a senha para root e conectando ao NETWORK criado
+  - docker run -d -v mysql-todo-db:/var/lib/mysql --network todo-app -e MYSQL_ROOT_PASSWORD=rodrigo -e MYSQL_DATABASE=todos mysql:5.7
 
-docker exec -it IDDOCKER mysql -u root -p
-"Entrando dentro do docker onde tem o mysql"
+Entrando dentro do docker onde tem o mysql
+  - docker exec -it IDDOCKER mysql -u root -p
 
 docker run -it --network  todo-app nicolaka/netshoot
 
 dig mysql
 
-docker run -d -v mysql-todo-db:/var/lib/mysql --network todo-app --network-alias mysql -e MYSQL_ROOT_PASSWORD=rodrigo -e MYSQL_DATABASE=todos mysql:5.7
-"Criando um docker com o MYSQL dentro, já definindo a senha para root e conectando ao NETWORK criado com apelido de mysql"
+Criando um docker com o MYSQL dentro, já definindo a senha para root e conectando ao NETWORK criado com apelido de mysql"
+  - docker run -d -v mysql-todo-db:/var/lib/mysql --network todo-app --network-alias mysql -e MYSQL_ROOT_PASSWORD=rodrigo -e MYSQL_DATABASE=todos mysql:5.7
 
 docker run -it --network  todo-app nicolaka/netshoot
-__________________________________________________________________________________________________________________________________________________________
+____________________________________________________
 
 OUTROS COMANDOS
 history | grep -i "digite a palavra a ser buscada no history"
-
-
