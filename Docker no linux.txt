@@ -177,5 +177,10 @@ Criando um docker com o MYSQL dentro, já definindo a senha para root e conectan
 docker run -it --network  todo-app nicolaka/netshoot
 ____________________________________________________
 
-OUTROS COMANDOS
-history | grep -i "digite a palavra a ser buscada no history"
+EXECUÇÕES
+#Para exercutar o dockerfile e criar uma imagem:
+docker build -t nome_da_imagem:tag_criada .
+#Substitua nome_da_imagem pelo nome que você deseja dar à sua imagem e tag_criada pela tag que deseja atribuir à imagem. O ponto final . #no final do comando indica que o Dockerfile está no diretório atual.
+
+#Após construir a imagem, você pode executar um contêiner com base nessa imagem usando o comando docker run. Por exemplo:
+docker run --name meu_container -p 8080:80 -d nome_da_imagem:tag_criada
