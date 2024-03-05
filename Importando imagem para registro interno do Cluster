@@ -1,0 +1,25 @@
+Importando imagem para registro interno do Cluster
+
+Para garantir que uma imagem Docker específica permaneça no registro interno do OpenShift, você pode importá-la manualmente. Isso garante que a imagem esteja sempre disponível para uso em seus projetos, mesmo que o repositório externo não esteja acessível.
+
+Aqui está como você pode fazer isso:
+
+Primeiro, verifique se você tem acesso ao cluster do OpenShift e à ferramenta de linha de comando oc.
+
+Execute o comando oc import-image para importar a imagem desejada para o registro interno do OpenShift. Por exemplo, se você deseja importar a imagem jboss/wildfly:10.1, você pode usar o seguinte comando:
+
+oc import-image wildfly-101 --from=jboss/wildfly:10.1 --confirm 
+
+Neste comando:
+
+wildfly-101 é o nome que você deseja dar à imagem importada no registro interno do OpenShift.
+jboss/wildfly:10.1 é a imagem que você deseja importar.
+Após executar esse comando, o OpenShift irá importar a imagem especificada para o registro interno. Certifique-se de ter as permissões adequadas para importar imagens no seu projeto do OpenShift.
+
+Depois de importada, a imagem estará disponível no registro interno do OpenShift para uso em seus projetos. Você pode verificar a presença da imagem usando o comando oc get is:
+
+oc get is 
+
+Isso listará todas as imagens disponíveis no registro interno do OpenShift. Sua imagem importada deve estar listada lá.
+
+Após importar a imagem, ela permanecerá no registro interno do OpenShift, garantindo que esteja sempre disponível para uso em seus projetos.
