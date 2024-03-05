@@ -1,0 +1,48 @@
+# Crie um Dockerfile:
+# Use uma imagem base com Java
+FROM openjdk:11-jre-slim
+
+# Instale o MySQL Server
+RUN apt-get update && \
+    apt-get install -y mysql-server && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /var/run/mysqld && \
+    chown -R mysql:mysql /var/run/mysqld
+
+# Copie o arquivo JAR da sua aplicação Java para dentro do contêiner
+COPY /path/to/your/application.jar /app/application.jar
+# Copie o script de inicialização do MySQL
+COPY mysql-init.sh /docker-entrypoint-initdb.d/mysql-init.sh
+# Exponha a porta que sua aplicação Java utiliza
+EXPOSE 8080
+# Exponha a porta do MySQL
+EXPOSE 3306
+
+# Comando para iniciar o MySQL e a aplicação Java
+CMD service mysql start && java -jar /app/application.jar
+
+Crie um script de inicialização para o MySQL:
+Crie um script chamado mysql-init.sh e adicione comandos SQL que serão executados quando o contêiner for iniciado. Por exemplo, você pode criar um banco de dados e um usuário.
+#!/bin/bash
+
+# Comandos SQL para criar um banco de dados e um usuário
+echo "CREATE DATABASE mydatabase;" > /docker-entrypoint-initdb.d/init.sql
+echo "CREATE USER 'user'@'%' IDENTIFIED BY 'mypassword';" >> /docker-entrypoint-initdb.d/init.sql
+echo "GRANT ALL PRIVILEGES ON mydatabase.* TO 'myuser'@'%';" >> /docker-entrypoint-initdb.d/init.sql
+
+Construa a imagem Docker:
+No diretório onde você tem o Dockerfile e o script mysql-init.sh, execute o seguinte comando para construir a imagem:
+docker build -t minha-imagem-java-mysql .
+
+Disponibilize a imagem para download:
+Se desejar disponibilizar a imagem para download, siga os passos mencionados anteriormente para fazer o push da imagem para um registro Docker.
+Lembre-se de que esta é uma solução básica e pode precisar de ajustes adicionais, dependendo das necessidades específicas da sua aplicação. Certifique-se de proteger informações sensíveis, como senhas, ao criar imagens Docker para distribuição pública.
+docker login
+docker push seu-nome-de-usuario/minha-imagem-java-mysql
+
+
+#Nome a ser dado a essa imagem:
+java-mysql-server: Este nome é direto e indica claramente que a imagem contém um servidor MySQL e uma aplicação Java.
+mysql-java-app: Outra abordagem é listar os componentes principais na ordem em que são executados. Nesse caso, MySQL vem primeiro seguido pela aplicação Java.
+java-mysql-combined: Este nome enfatiza a ideia de que a imagem combina duas tecnologias diferentes em uma única imagem.
+app-with-db: Esta é uma abordagem mais genérica que indica que a imagem contém tanto a aplicação quanto o banco de dados necessários para executá-la.
