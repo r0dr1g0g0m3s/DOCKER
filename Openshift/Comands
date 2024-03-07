@@ -23,3 +23,68 @@ oc get services 
 
 #Ver Detalhes de um Objeto Específico (por exemplo, Deployment):
 oc describe deployment NOME_DO_DEPLOYMENT
+
+#Imprimir todos os pods qque estão com estados diferentes de Running ou Completed
+kubectl get pods --all-namespaces -o wide | grep -v "Running\|Completed"
+ocget pods --all-namespaces -o wide | grep -v "Running\|Completed"
+
+#imprimir todos os pvc existentes no cluster e sua capacida total de armazenamento.
+oc get pvc --all-namespaces -o=custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name,CAPACIDADE_TOTAL:.status.capacity.storage
+
+#Auto completar com os comando oc e kuberctl, além de dar um apelido para o kubectl.
+nano .bash rc
+
+#Acessar um projeto específico
+oc project <nameproject>
+kubectlproject <nameproject>
+
+
+#Listar todos os projetos
+oc projects <nameproject>
+kubectl project <nameproject>
+
+
+#Deletar um projeto específico
+oc delete project <nome_do_projeto>
+
+#Listar pods do projecto em que se está
+oc get pod
+kubectl oc get pod
+
+
+#Traz o detalhe de Ip,node, nominated node, readiness gates
+oc get pod -o wide
+kubectl oc get pod -o wide
+
+#Listando todos os pods de um node específico.
+oc get pods --all-namespaces --field-selector spec.nodeName=ocp-6d49v-worker-prd-2qd9j
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
