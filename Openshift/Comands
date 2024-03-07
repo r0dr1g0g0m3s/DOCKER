@@ -96,3 +96,101 @@ oc describe nodes <nomedonode>
 oc get jobs
 kubectl get jobs
 
+# Verificar todos os processos que estão ocorrendo de todos os projetos
+oc get jobs -A
+kubectl get jobs -A
+
+#Somente tratá informações detalhadas sobre um job específico no cluster, caso você esteja dentro do projeto referente ao job.
+oc describe job <nomedojob>
+kubectl describe job <nomedojob
+
+#Tratá informações detalhadas sobre um job específico no cluster, não importando dentro de qual projeto você está. O que torna isso possível é: " -n <nomedoprojeto>
+oc describe job <nomedojob> -n <nomedoprojet ou namespace)
+kubectl describe job <nomedojob> -n <nomedoprojet ou namespace)
+
+#Status da implantação/atualização do <aproximandovidas> no seu cluster 
+#Verifica o status do Deployment "aproximandovidas". O comando examina se há alguma alteração em andamento, se os pods estão sendo atualizados, ou se há algum problema durante o processo de implantação. Isso é útil para monitorar o progresso da implantação e identificar possíveis problemas.
+oc rollout status deployment aproximandovidas
+kubectl rollout status deployment aproximandovidas
+
+#Acessando um terminal de um pod a partir do seu terminal local
+oc exec -it <nome_do_pod> -- /bin/bash
+
+#Após estar dentro do terminal do pod,  este comando verifica as informações de espaço em disco disponível no sistema. 
+df -h
+
+#Verificar os pontos de montagem (provável não funcionar dentro do pod)
+mount -l
+
+#Verificar os logs de um container específico.  É útil para monitorar as saídas do seu aplicativo ou serviço em execução no cluster OpenShift enquanto ele está em execução. O uso da opção -f é especialmente útil para observar os logs em tempo real à medida que novos registros são gerados.
+oc logs -f -c <nomedoconta 
+
+#Escalar o recurso do machineset,  para o cluster criar mais nodes. 
+# https://docs.openshift.com/container-platform/4.12/machine_management/manually-scaling-machineset.html
+console web →  Compute -> MachineSet -> "O MachineSet referente".  
+Pode ser feito pelo cli oc scale --replicas="qt de replicas" machineset <machineset> -n openshift-machine-api
+
+#Listar todos os projetos onde já existe o hpa no deployment do mesmo.
+#HPA: Auto replica pods de acordo com as requisições que vão consumindo a memória  e ou CPU (Regra de auto réplica quando consumido 75% de um desses recursos) do POD. 
+oc get hpa --all-namespaces
+
+#Listar HPAs em uma namespace específica
+oc get hpa -n minha-namespace
+
+#Listar detalhes específicos de um HPA em uma determinada namespace, use:
+oc get hpa <nome-do-hpa> -n <sua-namespace>
+
+#Acessando o shell do container que está em execução no cluster OpenShift
+oc rsh <nome_pod>
+
+#Copiar arquivos do seu host local para um contêiner em execução
+oc cp <nome_do_arquivo_local> <nome_pod>:</caminho/no/contêiner>
+
+#copiar todo um diretório local para um contêiner em execução
+oc rsync <diretório_local> <nome_pod>:</caminho/no/contêiner>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
