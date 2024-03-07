@@ -59,32 +59,40 @@ kubectl oc get pod -o wide
 #Listando todos os pods de um node específico.
 oc get pods --all-namespaces --field-selector spec.nodeName=ocp-6d49v-worker-prd-2qd9j
 
+oc describe pod <nomedopod>
 
+#Traz informações de dos pods relacionados ao projeto que você está dentro: Namespace (nome do project), Name (nome do pod), CPU, Memory.
+oc adm top pod <nomedopod>
 
+#Traz informações de todos os pods do cluster: Namespace (nome do project), Name (nome do pod), CPU, Memory.
+oc adm top pod <nomedopod> -A
 
+#Traz as métricas de CPU e memória de todos os pods em um nó específico,
+oc top pod --all-namespaces --field-selector spec.nodeName=<nomedonode>
+oc get pods -A -o wide | grep -<nomedonode>
 
+#Verificando todos os nodes do projeto em que você está
+oc get nodes
+kubectl get nodes
 
+#Verificando todos os jobs rodando em todos os projetos
+oc get nodes --all-namespaces
+kubectl get nodes --all-namespaces
 
+#Fornece informações detalhadas sobre um node específico do cluster, incluindo seu status, função, tempo de atividade, versões de Kubernetes e CRI-O, entre outras informações.
+oc get nodes -A -o wide | grep -<nomedonode>
 
+#obter informações em tempo real sobre o uso de recursos de um node específico do cluster
+oc adm top node <nomedonode>
 
+#obter informações em tempo real sobre o uso de recursos dos nós (nodes) no cluster
+oc adm top nodes
+kubectl top nodes
 
+#obter informações detalhadas, como quais pods estão dentro.
+oc describe nodes <nomedonode>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# Verificar todos os processos que estão ocorrendo do projeto que está dentro
+oc get jobs
+kubectl get jobs
 
