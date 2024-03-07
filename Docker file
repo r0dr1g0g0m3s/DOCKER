@@ -1,0 +1,40 @@
+# Define a imagem base para compilar o código
+FROM maven:3.6.0-jdk-11-slim AS build
+
+# Cria diretórios necessários para o Maven
+RUN mkdir -p /root/.m2/repository
+
+# Copia os arquivos de configuração do Maven
+COPY pom.xml /home/app/pom.xml
+COPY .devops/assets/settings.xml /root/.m2
+
+# Copia o código fonte para o contêiner
+COPY src /home/app/src
+
+# Compila o código
+RUN mvn -f /home/app/pom.xml clean package
+
+# Define a imagem base para executar a aplicação
+FROM jboss/wildfly:10.1.0.Final
+
+# Define variáveis de ambiente
+ENV PROFILE=hml
+ENV TZ=America/Campo_Grande
+
+# Copia os arquivos de configuração do Wildfly
+COPY configuração/assets/standalone.xml /opt/jboss/wildfly/standalone/configuration/
+COPY configuração/assets/tjms/ /opt/jboss/wildfly/modules/system/layers/base/ZZZ/
+COPY configuração/assets/application-roles.properties /opt/jboss/wildfly/standalone/configuration/
+COPY configuração/assets/application-users.properties /opt/jboss/wildfly/standalone/configuration/
+COPY configuração/assets/mgmt-groups.properties /opt/jboss/wildfly/standalone/configuration/
+COPY configuração/assets/mgmt-users.properties /opt/jboss/wildfly/standalone/configuration/
+
+# Cria diretório para fontes e copia a fonte necessária
+RUN mkdir /opt/jboss/fonts
+COPY .devops/assets/Arial.ttf /opt/jboss/fonts
+
+# Copia o artefato compilado da fase de build
+COPY --from=build /home/app/target/sig-ex.war /opt/jboss/wildfly/standalone/deployments/sig-ex.war
+
+# Expõe a porta utilizada pela aplicação
+EXPOSE 8080
